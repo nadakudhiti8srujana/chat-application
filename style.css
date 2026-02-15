@@ -1,0 +1,90 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f1f1;
+}
+
+.login-box {
+    width: 300px;
+    margin: 120px auto;
+    background: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 6px;
+}
+
+.login-box input,
+.login-box button {
+    width: 90%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.chat-container {
+    display: none;
+    height: 100vh;
+}
+
+.rooms {
+    width: 25%;
+    background: #263238;
+    color: white;
+    padding: 10px;
+}
+
+.rooms ul {
+    list-style: none;
+    padding: 0;
+}
+
+.rooms li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.rooms li:hover {
+    background: #37474f;
+}
+
+.chat-box {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+}
+
+#chatHeader {
+    background: #1e88e5;
+    color: white;
+    padding: 10px;
+}
+
+.messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background: white;
+}
+
+.message {
+    margin-bottom: 8px;
+}
+
+.input-box {
+    display: flex;
+}
+
+.input-box input {
+    flex: 1;
+    padding: 10px;
+}
+
+.input-box button {
+    padding: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .rooms {
+        width: 35%;
+    }
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Application</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="login-box" id="loginBox">
+    <h2>Join Chat</h2>
+    <input type="text" id="username" placeholder="Enter username">
+    <button onclick="joinChat()">Join</button>
+</div>
+
+<div class="chat-container" id="chatContainer">
+    <div class="rooms">
+        <h3>Chat Rooms</h3>
+        <ul id="roomList">
+            <li onclick="joinRoom('General')">General</li>
+            <li onclick="joinRoom('Tech')">Tech</li>
+            <li onclick="joinRoom('College')">College</li>
+        </ul>
+        <input type="text" id="newRoom" placeholder="New room name">
+        <button onclick="createRoom()">Create</button>
+    </div>
+
+    <div class="chat-box">
+        <div id="chatHeader">Room: General</div>
+        <div class="messages" id="messages"></div>
+        <div class="input-box">
+            <input type="text" id="messageInput" placeholder="Type message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
