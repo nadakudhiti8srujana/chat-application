@@ -1,90 +1,97 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f1f1f1;
+body{
+margin:0;
+font-family:Arial;
+background:#eef2f7;
 }
 
-.login-box {
-    width: 300px;
-    margin: 120px auto;
-    background: white;
-    padding: 20px;
-    text-align: center;
-    border-radius: 6px;
+.login-box{
+width:300px;
+margin:120px auto;
+background:white;
+padding:20px;
+text-align:center;
+border-radius:10px;
 }
 
-.login-box input,
-.login-box button {
-    width: 90%;
-    padding: 10px;
-    margin-top: 10px;
+.login-box input, .login-box button{
+width:90%;
+padding:10px;
+margin-top:10px;
 }
 
-.chat-container {
-    display: none;
-    height: 100vh;
+.chat-container{
+display:none;
+height:100vh;
 }
 
-.rooms {
-    width: 25%;
-    background: #263238;
-    color: white;
-    padding: 10px;
+.sidebar{
+width:20%;
+background:#1e293b;
+color:white;
+padding:15px;
 }
 
-.rooms ul {
-    list-style: none;
-    padding: 0;
+.sidebar ul{
+list-style:none;
+padding:0;
 }
 
-.rooms li {
-    padding: 8px;
-    cursor: pointer;
+.chat-box{
+width:80%;
+display:flex;
+flex-direction:column;
 }
 
-.rooms li:hover {
-    background: #37474f;
+.chat-header{
+background:#2563eb;
+color:white;
+padding:15px;
+font-size:18px;
 }
 
-.chat-box {
-    width: 75%;
-    display: flex;
-    flex-direction: column;
+.messages{
+flex:1;
+padding:10px;
+overflow-y:auto;
+background:white;
 }
 
-#chatHeader {
-    background: #1e88e5;
-    color: white;
-    padding: 10px;
+.myMsg{
+background:#2563eb;
+color:white;
+padding:10px;
+margin:8px;
+border-radius:10px;
+width:60%;
+margin-left:auto;
 }
 
-.messages {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    background: white;
+.otherMsg{
+background:#e2e8f0;
+padding:10px;
+margin:8px;
+border-radius:10px;
+width:60%;
 }
 
-.message {
-    margin-bottom: 8px;
+span{
+display:block;
+font-size:10px;
+margin-top:5px;
 }
 
-.input-box {
-    display: flex;
+.input-box{
+display:flex;
 }
 
-.input-box input {
-    flex: 1;
-    padding: 10px;
+.input-box input{
+flex:1;
+padding:12px;
 }
 
-.input-box button {
-    padding: 10px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .rooms {
-        width: 35%;
-    }
+.input-box button{
+padding:12px;
+background:#2563eb;
+color:white;
+border:none;
 }

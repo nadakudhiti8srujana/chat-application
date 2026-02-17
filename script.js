@@ -1,119 +1,101 @@
-let username = "";
-let currentRoom = "General";
+let username="";
+let currentRoom="General";
 
 const chatChannel = new BroadcastChannel("chat_channel");
 const userChannel = new BroadcastChannel("user_channel");
 
-let activeUsers = [];
+let users=[];
 
-/* ======================
-   JOIN CHAT
-====================== */
-function joinChat() {
-    const name = document.getElementById("username").value.trim();
+/* JOIN */
+function joinChat(){
+    const name=document.getElementById("username").value.trim();
+    if(name===""){alert("Enter name");return;}
 
-    if (name === "") {
-        alert("Enter username");
-        return;
-    }
+    username=name;
 
-    if (activeUsers.includes(name)) {
-        alert("Username already in use. Choose another.");
-        return;
-    }
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("chatContainer").style.display="flex";
 
-    username = name;
-    activeUsers.push(username);
-
-    userChannel.postMessage({ type: "join", user: username });
-
-    document.getElementById("loginBox").style.display = "none";
-    document.getElementById("chatContainer").style.display = "flex";
+    userChannel.postMessage({type:"join",user:username});
 }
 
-/* ======================
-   ROOM FUNCTIONS
-====================== */
-function joinRoom(room) {
-    currentRoom = room;
-    document.getElementById("chatHeader").innerText = "Room: " + room;
-    document.getElementById("messages").innerHTML = "";
+/* ROOMS */
+function joinRoom(room){
+    currentRoom=room;
+    document.getElementById("roomTitle").innerText="Room: "+room;
+    document.getElementById("messages").innerHTML="";
 }
 
-function createRoom() {
-    const room = document.getElementById("newRoom").value.trim();
-    if (room === "") return;
+function createRoom(){
+    const room=document.getElementById("newRoom").value.trim();
+    if(room==="") return;
 
-    const li = document.createElement("li");
-    li.innerText = room;
-    li.onclick = () => joinRoom(room);
+    const li=document.createElement("li");
+    li.innerText=room;
+    li.onclick=()=>joinRoom(room);
     document.getElementById("roomList").appendChild(li);
 
-    document.getElementById("newRoom").value = "";
+    document.getElementById("newRoom").value="";
 }
 
-/* ======================
-   TEXT FORMATTING
-====================== */
-function formatMessage(text) {
-    text = text.replace(/\*(.*?)\*/g, "<b>$1</b>");
-    text = text.replace(/_(.*?)_/g, "<i>$1</i>");
-    text = text.replace(
-        /(https?:\/\/[^\s]+)/g,
-        '<a href="$1" target="_blank">$1</a>'
-    );
-    return text;
-}
-
-/* ======================
-   SEND MESSAGE
-====================== */
-function sendMessage() {
-    const input = document.getElementById("messageInput");
-    const text = input.value.trim();
-    if (text === "") return;
+/* SEND */
+function sendMessage(){
+    const input=document.getElementById("messageInput");
+    const text=input.value.trim();
+    if(text==="") return;
 
     chatChannel.postMessage({
-        user: username,
-        room: currentRoom,
-        text: formatMessage(text),
-        time: new Date().toLocaleTimeString()
+        user:username,
+        room:currentRoom,
+        text:text,
+        time:new Date().toLocaleTimeString()
     });
 
-    input.value = "";
+    input.value="";
 }
 
-/* ======================
-   RECEIVE MESSAGE
-====================== */
-chatChannel.onmessage = function (event) {
-    const data = event.data;
-    if (data.room !== currentRoom) return;
-
-    const msg = document.createElement("div");
-    msg.className = "message";
-    msg.innerHTML = `<b>${data.user}</b> (${data.time}): ${data.text}`;
-
-    const messages = document.getElementById("messages");
-    messages.appendChild(msg);
-    messages.scrollTop = messages.scrollHeight;
-};
-
-/* ======================
-   USER TRACKING
-====================== */
-userChannel.onmessage = function (event) {
-    const data = event.data;
-
-    if (data.type === "join" && !activeUsers.includes(data.user)) {
-        activeUsers.push(data.user);
-    }
-
-    if (data.type === "leave") {
-        activeUsers = activeUsers.filter(u => u !== data.user);
-    }
-};
-
-window.addEventListener("beforeunload", () => {
-    userChannel.postMessage({ type: "leave", user: username });
+/* ENTER SEND */
+document.addEventListener("keypress",function(e){
+    if(e.key==="Enter") sendMessage();
 });
+
+/* RECEIVE */
+chatChannel.onmessage=function(e){
+    const data=e.data;
+    if(data.room!==currentRoom) return;
+
+    const msg=document.createElement("div");
+
+    if(data.user===username){
+        msg.className="myMsg";
+    } else{
+        msg.className="otherMsg";
+    }
+
+    msg.innerHTML=`<b>${data.user}</b><br>${data.text}<span>${data.time}</span>`;
+    const box=document.getElementById("messages");
+    box.appendChild(msg);
+    box.scrollTop=box.scrollHeight;
+};
+
+/* USERS */
+userChannel.onmessage=function(e){
+    const data=e.data;
+
+    if(data.type==="join"){
+        if(!users.includes(data.user)){
+            users.push(data.user);
+            updateUsers();
+        }
+    }
+};
+
+function updateUsers(){
+    const ul=document.getElementById("userList");
+    ul.innerHTML="";
+    users.forEach(u=>{
+        const li=document.createElement("li");
+        li.innerText=u;
+        ul.appendChild(li);
+    });
+}
